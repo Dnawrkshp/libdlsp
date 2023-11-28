@@ -3,9 +3,10 @@ EE_OBJS_DIR = obj/
 EE_LIB_DIR = lib/
 
 EE_INCS += -I./include -I$(EE_SRC_DIR)
+EE_CFLAGS += -DNTSC
 
 EE_LIB = $(EE_LIB_DIR)libdlsp.a
-EE_OBJS = lookup.o
+EE_OBJS = underlay.o overlay.o
 
 EE_OBJS := $(EE_OBJS:%=$(EE_OBJS_DIR)%)
 
