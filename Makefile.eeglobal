@@ -7,7 +7,7 @@
 # Review ps2sdk README & LICENSE files for further details.
 
 # Include directories
-EE_INCS := -I$(PS2SDK)/ee/include -I$(PS2SDK)/common/include -I. $(EE_INCS)
+EE_INCS :=  -I./include -I$(PS2SDK)/ee/include -I$(PS2SDK)/common/include $(EE_INCS)
 
 # C compiler flags
 EE_CFLAGS := -D_EE -Os -G0 -Wall -fno-builtin -fomit-frame-pointer -ffunction-sections -fdata-sections -fsingle-precision-constant -nostdlib $(EE_CFLAGS)
