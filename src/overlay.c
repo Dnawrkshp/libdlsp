@@ -3,6 +3,23 @@
 #include "helpers.h"
 
 //--------------------------------------------------------
+DEFINE_OVERLAY_LOOKUP_NTSC(UpdatePad_func
+  , 0x00490400
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+);
+
+//--------------------------------------------------------
 void* GetOverlayAddress(OverlayLookupAddress_t* lookup)
 {
   if (!lookup) return 0;
