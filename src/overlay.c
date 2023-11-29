@@ -3,7 +3,7 @@
 #include "helpers.h"
 
 //--------------------------------------------------------
-DEFINE_OVERLAY_LOOKUP_NTSC(UpdatePad_func
+DEFINE_OVERLAY_LOOKUP_NTSC(UpdatePad_lookup
   , 0x00490400
   , 0x0
   , 0x0
@@ -20,8 +20,42 @@ DEFINE_OVERLAY_LOOKUP_NTSC(UpdatePad_func
 );
 
 //--------------------------------------------------------
-DEFINE_OVERLAY_LOOKUP_NTSC(FontPrint_func
+DEFINE_OVERLAY_LOOKUP_NTSC(FontPrint_lookup
   , 0x00454a70
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+);
+
+//--------------------------------------------------------
+DEFINE_OVERLAY_LOOKUP_NTSC(FontStringLength_lookup
+  , 0x00454780
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+);
+
+//--------------------------------------------------------
+DEFINE_OVERLAY_LOOKUP_NTSC(FontStringHeight_lookup
+  , 0x00454600
   , 0x0
   , 0x0
   , 0x0

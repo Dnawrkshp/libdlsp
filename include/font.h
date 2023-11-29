@@ -17,10 +17,13 @@ typedef enum {
 } FontAlignment;
 
 typedef void (*FontPrint_f)(float x, float y, u64 rgba, char* s, int length, float scaleX, float scaleY, FontAlignment alignment, char bEnableDropShadow, u64 dropShadowColor, float dropShadowXOffset, float dropShadowYOffset);
+typedef void (*FontStringLength_f)(char* s, int length, float scale);
+typedef void (*FontStringHeight_f)(char* s, int length, float scale);
 
 
 //--------------------------------------------------------
 void FontPrint(float x, float y, u64 rgba, char* s, int length, float scaleX, float scaleY, FontAlignment alignment, char bEnableDropShadow, u64 dropShadowColor, float dropShadowXOffset, float dropShadowYOffset);
-
+void FontStringLength(char* s, int length, float scale);
+void FontStringHeight(char* s, int length, float scale);
 
 #endif // _LIBDLSP_FONT_H_

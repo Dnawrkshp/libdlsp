@@ -61,8 +61,10 @@ typedef struct {
 } OverlayLookupAddress_t;
 
 //--------------------------------------------------------
-DECLARE_OVERLAY_LOOKUP(UpdatePad_func);
-DECLARE_OVERLAY_LOOKUP(FontPrint_func);
+DECLARE_OVERLAY_LOOKUP(UpdatePad_lookup);
+DECLARE_OVERLAY_LOOKUP(FontPrint_lookup);
+DECLARE_OVERLAY_LOOKUP(FontStringLength_lookup);
+DECLARE_OVERLAY_LOOKUP(FontStringHeight_lookup);
 
 //--------------------------------------------------------
 // returns the current address from the given overlay lookup
