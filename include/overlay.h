@@ -12,10 +12,10 @@ typedef struct OverlayLookupAddress {
   void* Addresses[OVERLAY_ADDRESS_COUNT];
 } OverlayLookupAddress_t;
 
-#define DECLARE_OVERLAY_ADDRESS(name) extern OverlayLookupAddress_t name ## _lookup;
+#define DECLARE_OVERLAY_ADDRESS(name) extern OverlayLookupAddress_t name;
 
 #define DEFINE_OVERLAY_ADDRESS_NTSC(name, offset_mainmenu, offset_bdome, offset_catacrom, offset_sarathos, offset_kronos, offset_shaar, offset_orxon, offset_valix, offset_torval, offset_stygia, offset_maraxus, offset_ghoststation, offset_controllevel)\
-OverlayLookupAddress_t name ## _lookup = {\
+OverlayLookupAddress_t name = {\
   .Addresses = {\
     [LEVEL_ID_MAIN_MENU] (void*)(offset_mainmenu),\
     [LEVEL_ID_BATTLEDOME] (void*)(offset_bdome),\
