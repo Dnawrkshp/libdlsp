@@ -20,6 +20,23 @@ DEFINE_OVERLAY_LOOKUP_NTSC(UpdatePad_func
 );
 
 //--------------------------------------------------------
+DEFINE_OVERLAY_LOOKUP_NTSC(FontPrint_func
+  , 0x00454a70
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+  , 0x0
+);
+
+//--------------------------------------------------------
 void* GetOverlayAddress(OverlayLookupAddress_t* lookup)
 {
   if (!lookup) return 0;

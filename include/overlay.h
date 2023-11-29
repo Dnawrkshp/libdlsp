@@ -62,6 +62,7 @@ typedef struct {
 
 //--------------------------------------------------------
 DECLARE_OVERLAY_LOOKUP(UpdatePad_func);
+DECLARE_OVERLAY_LOOKUP(FontPrint_func);
 
 //--------------------------------------------------------
 // returns the current address from the given overlay lookup
