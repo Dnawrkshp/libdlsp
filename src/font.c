@@ -10,7 +10,7 @@ void FontPrint(float x, float y, u64 rgba, char* s, int length, float scaleX, fl
 }
 
 //--------------------------------------------------------
-void FontStringLength(char* s, int length, float scale)
+int FontStringLength(char* s, int length, float scale)
 {
   FontStringLength_f fontStringLengthFunc = (FontStringLength_f)GetOverlayAddress(&FontStringLength_lookup);
   if (!fontStringLengthFunc) return;
@@ -19,7 +19,7 @@ void FontStringLength(char* s, int length, float scale)
 }
 
 //--------------------------------------------------------
-void FontStringHeight(char* s, int length, float scale)
+int FontStringHeight(char* s, int length, float scale)
 {
   FontStringHeight_f fontStringHeightFunc = (FontStringHeight_f)GetOverlayAddress(&FontStringHeight_lookup);
   if (!fontStringHeightFunc) return;
