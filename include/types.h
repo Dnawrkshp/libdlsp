@@ -63,4 +63,15 @@ struct PAD { // 0x5c0
 	/* 0x594 */ int ipad[10];
 };
 
+struct DrawParams { // 0x2c
+	/* 0x00 */ int iUsing;
+	/* 0x04 */ int iIcon;
+	/* 0x08 */ void *pImage;
+	/* 0x0c */ float fShadowX;
+	/* 0x10 */ float fShadowY;
+	/* 0x14 */ unsigned int iShadowColor;
+	/* 0x18 */ unsigned int vColors[4];
+	/* 0x28 */ float fFade;
+};
+
 #endif // _LIBDLSP_TYPES_H_

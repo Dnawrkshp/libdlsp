@@ -5,6 +5,8 @@
 
 //--------------------------------------------------------
 typedef s128 vec4;
+typedef float vec4f[4];
+typedef float vec2f[2];
 
 //--------------------------------------------------------
 void vector_write(void* output, vec4 input0);

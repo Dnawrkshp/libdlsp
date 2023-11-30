@@ -5,25 +5,6 @@
 #include "pad.h"
 #include "font.h"
 
-#define BEGIN_OVERLAY_LOOKUP(name, type) type name[OVERLAY_LOOKUP_COUNT] = {
-#define END_OVERLAY_LOOKUP(name) };
-
-#if NTSC
-#define OVERLAY_LOOKUP_ENTRY_NTSC(level, offset) [OVERLAY_LOOKUP_ ## level] (void*)(offset),
-#define OVERLAY_LOOKUP_ENTRY_PAL(level, offset) 
-#elif PAL
-#define OVERLAY_LOOKUP_ENTRY_NTSC(level, offset) 
-#define OVERLAY_LOOKUP_ENTRY_PAL(level, offset) [OVERLAY_LOOKUP_ ## level] (void*)(offset),
-#endif
-
-#ifdef DEBUG
-    #define DPRINTF(fmt, ...)       \
-        printf("%s"fmt, "", ##__VA_ARGS__);
-#else
-    #define DPRINTF(fmt, ...) 
-#endif
-
-
 // map level id to overlay lookup index
 // all multiplayer levels have the same overlay
 // matching singleplayer and coop levels share the same overlay
@@ -105,21 +86,6 @@ char LevelToLookupIndexId[LEVEL_ID_COUNT] = {
   [LEVEL_ID_MP_SPLITSCREEN_MARAXUS] OVERLAY_LOOKUP_MULTIPLAYER,
   [LEVEL_ID_MP_SPLITSCREEN_GHOST_STATION] OVERLAY_LOOKUP_MULTIPLAYER
 };
-
-//--------------------------------------------------------
-BEGIN_OVERLAY_LOOKUP(UpdatePad_lookup, UpdatePad_f)
-  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00490400)
-END_OVERLAY_LOOKUP(UpdatePad_lookup)
-
-//--------------------------------------------------------
-BEGIN_OVERLAY_LOOKUP(FontPrint_lookup, FontPrint_f)
-  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454a70)
-END_OVERLAY_LOOKUP(FontPrint_lookup)
-
-//--------------------------------------------------------
-BEGIN_OVERLAY_LOOKUP(FontStringLength_lookup, FontStringLength_f)
-  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454780)
-END_OVERLAY_LOOKUP(FontStringLength_lookup)
 
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(FontStringHeight_lookup, FontStringHeight_f)

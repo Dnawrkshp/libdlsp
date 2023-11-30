@@ -2,10 +2,18 @@
 #define _LIBDLSP_OVERLAY_H_
 
 #include "enums.h"
-#include "pad.h"
-#include "font.h"
 
 #define DECLARE_OVERLAY_LOOKUP(name, type) extern type name[OVERLAY_LOOKUP_COUNT];
+#define BEGIN_OVERLAY_LOOKUP(name, type) type name[OVERLAY_LOOKUP_COUNT] = {
+#define END_OVERLAY_LOOKUP(name) };
+
+#if NTSC
+#define OVERLAY_LOOKUP_ENTRY_NTSC(level, offset) [OVERLAY_LOOKUP_ ## level] (void*)(offset),
+#define OVERLAY_LOOKUP_ENTRY_PAL(level, offset) 
+#elif PAL
+#define OVERLAY_LOOKUP_ENTRY_NTSC(level, offset) 
+#define OVERLAY_LOOKUP_ENTRY_PAL(level, offset) [OVERLAY_LOOKUP_ ## level] (void*)(offset),
+#endif
 
 //--------------------------------------------------------
 enum OverlayLookupIndexIds {
@@ -25,17 +33,6 @@ enum OverlayLookupIndexIds {
   OVERLAY_LOOKUP_MULTIPLAYER = 13,
   OVERLAY_LOOKUP_COUNT
 };
-
-//--------------------------------------------------------
-typedef struct {
-  void* Addresses[OVERLAY_LOOKUP_COUNT];
-} OverlayLookupAddress_t;
-
-//--------------------------------------------------------
-DECLARE_OVERLAY_LOOKUP(UpdatePad_lookup, UpdatePad_f);
-DECLARE_OVERLAY_LOOKUP(FontPrint_lookup, FontPrint_f);
-DECLARE_OVERLAY_LOOKUP(FontStringLength_lookup, FontStringLength_f);
-DECLARE_OVERLAY_LOOKUP(FontStringHeight_lookup, FontStringHeight_f);
 
 //--------------------------------------------------------
 // returns the current address from the given overlay lookup

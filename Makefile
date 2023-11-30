@@ -6,7 +6,7 @@ EE_LIB_DIR = lib/
 EE_CFLAGS += -DNTSC
 
 EE_LIB = $(EE_LIB_DIR)libdlsp.a
-EE_OBJS = underlay.o overlay.o math.o math3d.o font.o
+EE_OBJS = underlay.o overlay.o math.o math3d.o font.o pad.o draw.o
 
 EE_OBJS := $(EE_OBJS:%=$(EE_OBJS_DIR)%)
 
