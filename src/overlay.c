@@ -88,11 +88,6 @@ char LevelToLookupIndexId[LEVEL_ID_COUNT] = {
 };
 
 //--------------------------------------------------------
-BEGIN_OVERLAY_LOOKUP(FontStringHeight_lookup, FontStringHeight_f)
-  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454600)
-END_OVERLAY_LOOKUP(FontStringHeight_lookup)
-
-//--------------------------------------------------------
 void* GetOverlayAddress(void** lookup)
 {
   if (!lookup) return 0;
