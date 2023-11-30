@@ -9,13 +9,16 @@
 //--------------------------------------------------------
 typedef void (*DrawQuad_f)(vec2f *vPoints, struct DrawParams *pParams);
 typedef void (*DrawWidget2DFlatPrim_f)(struct Widget2D* widget, u32 rgba, int prim_type);
+typedef void (*DrawWidget2D_f)(struct Widget2D *pwidget, int scr_x, int scr_y, float scale_x, float scale_y, float theta_radians, u32 rgba, float t_frame);
 
 //--------------------------------------------------------
 DECLARE_OVERLAY_LOOKUP(DrawQuad_lookup, DrawQuad_f);
 DECLARE_OVERLAY_LOOKUP(DrawWidget2DFlatPrim_asm_lookup, DrawWidget2DFlatPrim_f);
+DECLARE_OVERLAY_LOOKUP(DrawWidget2D_lookup, DrawWidget2D_f);
 
 //--------------------------------------------------------
 void DrawQuad(vec2f *vPoints, struct DrawParams *pParams);
 void DrawWidget2DFlatPrim(struct Widget2D* widget, u32 rgba, int prim_type);
+void DrawWidget2D(struct Widget2D *pwidget, int scr_x, int scr_y, float scale_x, float scale_y, float theta_radians, u32 rgba, float t_frame);
 
 #endif // _LIBDLSP_DRAW_H_

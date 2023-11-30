@@ -25,3 +25,16 @@ void DrawWidget2DFlatPrim(struct Widget2D* widget, u32 rgba, int prim_type)
 
   drawWidget2DFlatPrimFunc(widget, rgba, prim_type);
 }
+
+//--------------------------------------------------------
+BEGIN_OVERLAY_LOOKUP(DrawWidget2D_lookup, DrawWidget2D_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x004ee248)
+END_OVERLAY_LOOKUP(DrawWidget2D_lookup)
+
+void DrawWidget2D(struct Widget2D *pwidget, int scr_x, int scr_y, float scale_x, float scale_y, float theta_radians, u32 rgba, float t_frame)
+{
+  DrawWidget2D_f drawWidget2DFunc = (DrawWidget2D_f)GetOverlayAddress((void**)&DrawWidget2D_lookup);
+  if (!drawWidget2DFunc) return;
+
+  drawWidget2DFunc(pwidget, scr_x, scr_y, scale_x, scale_y, theta_radians, rgba, t_frame);
+}
