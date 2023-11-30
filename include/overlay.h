@@ -2,73 +2,46 @@
 #define _LIBDLSP_OVERLAY_H_
 
 #include "enums.h"
+#include "pad.h"
+#include "font.h"
 
-// number of levels we store in our overlay lookup table
-// if we want to add coop support we should use LEVEL_ID_COOP_CONTROL_LEVEL
-// or if we want MP support we should use LEVEL_ID_MP_SPLITSCREEN_GHOST_STATION
-#define OVERLAY_ADDRESS_COUNT       (LEVEL_ID_CONTROL_LEVEL + 1)
-#define DECLARE_OVERLAY_LOOKUP(name) extern OverlayLookupAddress_t name;
+#define DECLARE_OVERLAY_LOOKUP(name, type) extern type name[OVERLAY_LOOKUP_COUNT];
 
-#if NTSC
-  #define DEFINE_OVERLAY_LOOKUP_NTSC(name, offset_mainmenu, offset_bdome, offset_catacrom, offset_sarathos, offset_kronos, offset_shaar, offset_orxon, offset_valix, offset_torval, offset_stygia, offset_maraxus, offset_ghoststation, offset_controllevel)\
-  OverlayLookupAddress_t name = {\
-    .Addresses = {\
-      [LEVEL_ID_MAIN_MENU] (void*)(offset_mainmenu),\
-      [LEVEL_ID_BATTLEDOME] (void*)(offset_bdome),\
-      [LEVEL_ID_CATACROM] (void*)(offset_catacrom),\
-      [LEVEL_ID_SARATHOS] (void*)(offset_sarathos),\
-      [LEVEL_ID_KRONOS] (void*)(offset_kronos),\
-      [LEVEL_ID_SHAAR] (void*)(offset_shaar),\
-      [LEVEL_ID_ORXON] (void*)(offset_orxon),\
-      [LEVEL_ID_VALIX] (void*)(offset_valix),\
-      [LEVEL_ID_TORVAL] (void*)(offset_torval),\
-      [LEVEL_ID_STYGIA] (void*)(offset_stygia),\
-      [LEVEL_ID_MARAXUS] (void*)(offset_maraxus),\
-      [LEVEL_ID_GHOST_STATION] (void*)(offset_ghoststation),\
-      [LEVEL_ID_CONTROL_LEVEL] (void*)(offset_controllevel),\
-    }\
-  };
-#else
-  #define DEFINE_OVERLAY_LOOKUP_NTSC 
-#endif
-
-#if PAL
-  #define DEFINE_OVERLAY_LOOKUP_PAL(name, offset_mainmenu, offset_bdome, offset_catacrom, offset_sarathos, offset_kronos, offset_shaar, offset_orxon, offset_valix, offset_torval, offset_stygia, offset_maraxus, offset_ghoststation, offset_controllevel)\
-  OverlayLookupAddress_t name = {\
-    .Addresses = {\
-      [LEVEL_ID_MAIN_MENU] (void*)(offset_mainmenu),\
-      [LEVEL_ID_BATTLEDOME] (void*)(offset_bdome),\
-      [LEVEL_ID_CATACROM] (void*)(offset_catacrom),\
-      [LEVEL_ID_SARATHOS] (void*)(offset_sarathos),\
-      [LEVEL_ID_KRONOS] (void*)(offset_kronos),\
-      [LEVEL_ID_SHAAR] (void*)(offset_shaar),\
-      [LEVEL_ID_ORXON] (void*)(offset_orxon),\
-      [LEVEL_ID_VALIX] (void*)(offset_valix),\
-      [LEVEL_ID_TORVAL] (void*)(offset_torval),\
-      [LEVEL_ID_STYGIA] (void*)(offset_stygia),\
-      [LEVEL_ID_MARAXUS] (void*)(offset_maraxus),\
-      [LEVEL_ID_GHOST_STATION] (void*)(offset_ghoststation),\
-      [LEVEL_ID_CONTROL_LEVEL] (void*)(offset_controllevel),\
-    }\
-  };
-#else
-  #define DEFINE_OVERLAY_LOOKUP_PAL 
-#endif
+//--------------------------------------------------------
+enum OverlayLookupIndexIds {
+  OVERLAY_LOOKUP_MAIN_MENU = 0,
+  OVERLAY_LOOKUP_BATTLEDOME = 1,
+  OVERLAY_LOOKUP_CATACROM = 2,
+  OVERLAY_LOOKUP_SARATHOS = 3,
+  OVERLAY_LOOKUP_KRONOS = 4,
+  OVERLAY_LOOKUP_SHAAR = 5,
+  OVERLAY_LOOKUP_ORXON = 6,
+  OVERLAY_LOOKUP_VALIX = 7,
+  OVERLAY_LOOKUP_TORVAL = 8,
+  OVERLAY_LOOKUP_STYGIA = 9,
+  OVERLAY_LOOKUP_MARAXUS = 10,
+  OVERLAY_LOOKUP_GHOST_STATION = 11,
+  OVERLAY_LOOKUP_CONTROL_LEVEL = 12,
+  OVERLAY_LOOKUP_MULTIPLAYER = 13,
+  OVERLAY_LOOKUP_COUNT
+};
 
 //--------------------------------------------------------
 typedef struct {
-  void* Addresses[OVERLAY_ADDRESS_COUNT];
+  void* Addresses[OVERLAY_LOOKUP_COUNT];
 } OverlayLookupAddress_t;
 
 //--------------------------------------------------------
-DECLARE_OVERLAY_LOOKUP(UpdatePad_lookup);
-DECLARE_OVERLAY_LOOKUP(FontPrint_lookup);
-DECLARE_OVERLAY_LOOKUP(FontStringLength_lookup);
-DECLARE_OVERLAY_LOOKUP(FontStringHeight_lookup);
+DECLARE_OVERLAY_LOOKUP(UpdatePad_lookup, UpdatePad_f);
+DECLARE_OVERLAY_LOOKUP(FontPrint_lookup, FontPrint_f);
+DECLARE_OVERLAY_LOOKUP(FontStringLength_lookup, FontStringLength_f);
+DECLARE_OVERLAY_LOOKUP(FontStringHeight_lookup, FontStringHeight_f);
 
 //--------------------------------------------------------
 // returns the current address from the given overlay lookup
 // or null if failed
-void* GetOverlayAddress(OverlayLookupAddress_t* lookup);
+void* GetOverlayAddress(void** lookup);
+
+extern char LevelToLookupIndexId[LEVEL_ID_COUNT];
 
 #endif // _LIBDLSP_OVERLAY_H_

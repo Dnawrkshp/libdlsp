@@ -1,84 +1,142 @@
 #include "underlay.h"
 #include "overlay.h"
 #include "helpers.h"
+#include "enums.h"
+#include "pad.h"
+#include "font.h"
+
+#define BEGIN_OVERLAY_LOOKUP(name, type) type name[OVERLAY_LOOKUP_COUNT] = {
+#define END_OVERLAY_LOOKUP(name) };
+
+#if NTSC
+#define OVERLAY_LOOKUP_ENTRY_NTSC(level, offset) [OVERLAY_LOOKUP_ ## level] (void*)(offset),
+#define OVERLAY_LOOKUP_ENTRY_PAL(level, offset) 
+#elif PAL
+#define OVERLAY_LOOKUP_ENTRY_NTSC(level, offset) 
+#define OVERLAY_LOOKUP_ENTRY_PAL(level, offset) [OVERLAY_LOOKUP_ ## level] (void*)(offset),
+#endif
+
+#ifdef DEBUG
+    #define DPRINTF(fmt, ...)       \
+        printf("%s"fmt, "", ##__VA_ARGS__);
+#else
+    #define DPRINTF(fmt, ...) 
+#endif
+
+
+// map level id to overlay lookup index
+// all multiplayer levels have the same overlay
+// matching singleplayer and coop levels share the same overlay
+// all invalid levels default to -1
+char LevelToLookupIndexId[LEVEL_ID_COUNT] = {
+  [LEVEL_ID_MAIN_MENU] OVERLAY_LOOKUP_MAIN_MENU,
+  [LEVEL_ID_BATTLEDOME] OVERLAY_LOOKUP_BATTLEDOME,
+  [LEVEL_ID_CATACROM] OVERLAY_LOOKUP_CATACROM,
+  [3] = -1,
+  [LEVEL_ID_SARATHOS] OVERLAY_LOOKUP_SARATHOS,
+  [LEVEL_ID_KRONOS] OVERLAY_LOOKUP_KRONOS,
+  [LEVEL_ID_SHAAR] OVERLAY_LOOKUP_SHAAR,
+  [LEVEL_ID_ORXON] OVERLAY_LOOKUP_ORXON,
+  [LEVEL_ID_VALIX] OVERLAY_LOOKUP_VALIX,
+  [9] = -1,
+  [LEVEL_ID_TORVAL] OVERLAY_LOOKUP_TORVAL,
+  [LEVEL_ID_STYGIA] OVERLAY_LOOKUP_STYGIA,
+  [12] = -1,
+  [LEVEL_ID_MARAXUS] OVERLAY_LOOKUP_MARAXUS,
+  [LEVEL_ID_GHOST_STATION] OVERLAY_LOOKUP_GHOST_STATION,
+  [LEVEL_ID_CONTROL_LEVEL] OVERLAY_LOOKUP_CONTROL_LEVEL,
+  [16] = -1,
+  [17] = -1,
+  [18] = -1,
+  [19] = -1,
+  [20] = -1,
+  [LEVEL_ID_COOP_BATTLEDOME] OVERLAY_LOOKUP_BATTLEDOME,
+  [LEVEL_ID_COOP_CATACROM] OVERLAY_LOOKUP_CATACROM,
+  [23] = -1,
+  [LEVEL_ID_COOP_SARATHOS] OVERLAY_LOOKUP_SARATHOS,
+  [LEVEL_ID_COOP_KRONOS] OVERLAY_LOOKUP_KRONOS,
+  [LEVEL_ID_COOP_SHAAR] OVERLAY_LOOKUP_SHAAR,
+  [LEVEL_ID_COOP_ORXON] OVERLAY_LOOKUP_ORXON,
+  [LEVEL_ID_COOP_VALIX] OVERLAY_LOOKUP_VALIX,
+  [29] = -1,
+  [LEVEL_ID_COOP_TORVAL] OVERLAY_LOOKUP_TORVAL,
+  [LEVEL_ID_COOP_STYGIA] OVERLAY_LOOKUP_STYGIA,
+  [32] = -1,
+  [LEVEL_ID_COOP_MARAXUS] OVERLAY_LOOKUP_MARAXUS,
+  [LEVEL_ID_COOP_GHOST_STATION] OVERLAY_LOOKUP_GHOST_STATION,
+  [LEVEL_ID_COOP_CONTROL_LEVEL] OVERLAY_LOOKUP_CONTROL_LEVEL,
+  [36] = -1,
+  [37] = -1,
+  [38] = -1,
+  [39] = -1,
+  [40] = -1,
+  [LEVEL_ID_MP_BATTLEDOME] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_CATACROM] OVERLAY_LOOKUP_MULTIPLAYER,
+  [42] = -1,
+  [LEVEL_ID_MP_SARATHOS] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_KRONOS] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SHAAR] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_ORXON] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_VALIX] OVERLAY_LOOKUP_MULTIPLAYER,
+  [49] = -1,
+  [LEVEL_ID_MP_TORVAL] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_STYGIA] OVERLAY_LOOKUP_MULTIPLAYER,
+  [52] = -1,
+  [LEVEL_ID_MP_MARAXUS] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_GHOST_STATION] OVERLAY_LOOKUP_MULTIPLAYER,
+  [55] = -1,
+  [56] = -1,
+  [57] = -1,
+  [58] = -1,
+  [59] = -1,
+  [60] = -1,
+  [LEVEL_ID_MP_SPLITSCREEN_BATTLEDOME] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SPLITSCREEN_CATACROM] OVERLAY_LOOKUP_MULTIPLAYER,
+  [63] = -1,
+  [LEVEL_ID_MP_SPLITSCREEN_SARATHOS] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SPLITSCREEN_KRONOS] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SPLITSCREEN_SHAAR] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SPLITSCREEN_ORXON] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SPLITSCREEN_VALIX] OVERLAY_LOOKUP_MULTIPLAYER,
+  [69] = -1,
+  [LEVEL_ID_MP_SPLITSCREEN_TORVAL] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SPLITSCREEN_STYGIA] OVERLAY_LOOKUP_MULTIPLAYER,
+  [72] = -1,
+  [LEVEL_ID_MP_SPLITSCREEN_MARAXUS] OVERLAY_LOOKUP_MULTIPLAYER,
+  [LEVEL_ID_MP_SPLITSCREEN_GHOST_STATION] OVERLAY_LOOKUP_MULTIPLAYER
+};
 
 //--------------------------------------------------------
-DEFINE_OVERLAY_LOOKUP_NTSC(UpdatePad_lookup
-  , 0x00490400
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-);
+BEGIN_OVERLAY_LOOKUP(UpdatePad_lookup, UpdatePad_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00490400)
+END_OVERLAY_LOOKUP(UpdatePad_lookup)
 
 //--------------------------------------------------------
-DEFINE_OVERLAY_LOOKUP_NTSC(FontPrint_lookup
-  , 0x00454a70
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-);
+BEGIN_OVERLAY_LOOKUP(FontPrint_lookup, FontPrint_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454a70)
+END_OVERLAY_LOOKUP(FontPrint_lookup)
 
 //--------------------------------------------------------
-DEFINE_OVERLAY_LOOKUP_NTSC(FontStringLength_lookup
-  , 0x00454780
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-);
+BEGIN_OVERLAY_LOOKUP(FontStringLength_lookup, FontStringLength_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454780)
+END_OVERLAY_LOOKUP(FontStringLength_lookup)
 
 //--------------------------------------------------------
-DEFINE_OVERLAY_LOOKUP_NTSC(FontStringHeight_lookup
-  , 0x00454600
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-  , 0x0
-);
+BEGIN_OVERLAY_LOOKUP(FontStringHeight_lookup, FontStringHeight_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454600)
+END_OVERLAY_LOOKUP(FontStringHeight_lookup)
 
 //--------------------------------------------------------
-void* GetOverlayAddress(OverlayLookupAddress_t* lookup)
+void* GetOverlayAddress(void** lookup)
 {
   if (!lookup) return 0;
 
   int gameLevel = PEEK_U32(UNDERLAY_GAME_LEVEL);
 
   // unsupported level
-  if (gameLevel >= OVERLAY_ADDRESS_COUNT) return 0;
+  if (gameLevel < 0 || gameLevel >= LEVEL_ID_COUNT) return 0;
+  int lookupIdx = LevelToLookupIndexId[gameLevel];
+  if (lookupIdx < 0 || lookupIdx >= OVERLAY_LOOKUP_COUNT) return 0;
 
-  return lookup->Addresses[gameLevel];
+  return lookup[lookupIdx];
 }

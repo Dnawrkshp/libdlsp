@@ -2,7 +2,6 @@
 #define _LIBDLSP_FONT_H_
 
 #include <tamtypes.h>
-#include "overlay.h"
 
 typedef enum {
 	TOP_LEFT = 0,
@@ -17,8 +16,8 @@ typedef enum {
 } FontAlignment;
 
 typedef void (*FontPrint_f)(float x, float y, u64 rgba, char* s, int length, float scaleX, float scaleY, FontAlignment alignment, char bEnableDropShadow, u64 dropShadowColor, float dropShadowXOffset, float dropShadowYOffset);
-typedef void (*FontStringLength_f)(char* s, int length, float scale);
-typedef void (*FontStringHeight_f)(char* s, int length, float scale);
+typedef int (*FontStringLength_f)(char* s, int length, float scale);
+typedef int (*FontStringHeight_f)(char* s, int length, float scale);
 
 
 //--------------------------------------------------------
