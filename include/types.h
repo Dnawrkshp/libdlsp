@@ -74,4 +74,17 @@ struct DrawParams { // 0x2c
 	/* 0x28 */ float fFade;
 };
 
+struct Widget2D {
+	/*   0 */ short int* positions;
+	/*   4 */ short int* uvs;
+	/*   8 */ int* rgbas;
+	/*   c */ char* polys;
+	/*  10 */ short int vert_cnt;
+	/*  12 */ short int prim_cnt;
+	/*  14 */ char prim_type;
+	/*  15 */ char flags;
+	/*  16 */ short int frame_cnt;
+	/*  18 */ int ipad[2];
+};
+
 #endif // _LIBDLSP_TYPES_H_
