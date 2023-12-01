@@ -14,6 +14,19 @@ void DrawQuad(vec2f *vPoints, struct DrawParams *pParams)
 }
 
 //--------------------------------------------------------
+BEGIN_OVERLAY_LOOKUP(DrawScreenGQuad_lookup, DrawScreenGQuad_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x0044aa58)
+END_OVERLAY_LOOKUP(DrawScreenGQuad_lookup)
+
+void DrawScreenGQuad(u64 *xys, u32 *rgbas)
+{
+  DrawScreenGQuad_f drawScreenGQuadFunc = (DrawScreenGQuad_f)GetOverlayAddress((void**)&DrawScreenGQuad_lookup);
+  if (!drawScreenGQuadFunc) return;
+
+  drawScreenGQuadFunc(xys, rgbas);
+}
+
+//--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(DrawWidget2DFlatPrim_asm_lookup, DrawWidget2DFlatPrim_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x004ee5c0)
 END_OVERLAY_LOOKUP(DrawWidget2DFlatPrim_asm_lookup)
