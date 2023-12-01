@@ -3,6 +3,7 @@
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(DrawQuad_lookup, DrawQuad_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00501f68)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x00606bb0)
 END_OVERLAY_LOOKUP(DrawQuad_lookup)
 
 void DrawQuad(vec2f *vPoints, struct DrawParams *pParams)
@@ -16,6 +17,7 @@ void DrawQuad(vec2f *vPoints, struct DrawParams *pParams)
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(DrawScreenGQuad_lookup, DrawScreenGQuad_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x0044aa58)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x004ff568)
 END_OVERLAY_LOOKUP(DrawScreenGQuad_lookup)
 
 void DrawScreenGQuad(u64 *xys, u32 *rgbas)
@@ -29,6 +31,7 @@ void DrawScreenGQuad(u64 *xys, u32 *rgbas)
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(DrawWidget2DFlatPrim_asm_lookup, DrawWidget2DFlatPrim_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x004ee5c0)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x005ebfa8)
 END_OVERLAY_LOOKUP(DrawWidget2DFlatPrim_asm_lookup)
 
 void DrawWidget2DFlatPrim(struct Widget2D* widget, u32 rgba, int prim_type)
@@ -42,6 +45,7 @@ void DrawWidget2DFlatPrim(struct Widget2D* widget, u32 rgba, int prim_type)
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(DrawWidget2D_lookup, DrawWidget2D_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x004ee248)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x005ebc30)
 END_OVERLAY_LOOKUP(DrawWidget2D_lookup)
 
 void DrawWidget2D(struct Widget2D *pwidget, int scr_x, int scr_y, float scale_x, float scale_y, float theta_radians, u32 rgba, float t_frame)

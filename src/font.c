@@ -4,6 +4,7 @@
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(FontPrint_lookup, FontPrint_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454a70)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x00510ee8)
 END_OVERLAY_LOOKUP(FontPrint_lookup)
 
 void FontPrint(float x, float y, u64 rgba, char* s, int length, float scaleX, float scaleY, FontAlignment alignment, char bEnableDropShadow, u64 dropShadowColor, float dropShadowXOffset, float dropShadowYOffset)
@@ -17,6 +18,7 @@ void FontPrint(float x, float y, u64 rgba, char* s, int length, float scaleX, fl
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(FontStringLength_lookup, FontStringLength_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454780)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x00510bf8)
 END_OVERLAY_LOOKUP(FontStringLength_lookup)
 
 int FontStringLength(char* s, int length, float scale)
@@ -30,6 +32,7 @@ int FontStringLength(char* s, int length, float scale)
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(FontStringHeight_lookup, FontStringHeight_f)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00454600)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x00510a78)
 END_OVERLAY_LOOKUP(FontStringHeight_lookup)
 
 int FontStringHeight(char* s, int length, float scale)
