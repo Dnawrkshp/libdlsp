@@ -8,8 +8,8 @@
 
 #define CANVAS_TO_SCREEN_X      (*(float*)UNDERLAY_FIXED_CANVAS_TO_SCREEN_X)
 #define CANVAS_TO_SCREEN_Y      (*(float*)UNDERLAY_FIXED_CANVAS_TO_SCREEN_Y)
-#define SCREEN_OFFSET_X         (*(float*)UNDERLAY_FIXED_SCREEN_OFFSET_X)
-#define SCREEN_OFFSET_Y         (*(float*)UNDERLAY_FIXED_SCREEN_OFFSET_Y)
+#define SCREEN_OFFSET_X         (*(int*)UNDERLAY_FIXED_SCREEN_OFFSET_X)
+#define SCREEN_OFFSET_Y         (*(int*)UNDERLAY_FIXED_SCREEN_OFFSET_Y)
 
 //--------------------------------------------------------
 typedef void (*DrawQuad_f)(vec2f *vPoints, struct DrawParams *pParams);
