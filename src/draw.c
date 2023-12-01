@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "helpers.h"
 
 //--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(DrawQuad_lookup, DrawQuad_f)
@@ -54,4 +55,32 @@ void DrawWidget2D(struct Widget2D *pwidget, int scr_x, int scr_y, float scale_x,
   if (!drawWidget2DFunc) return;
 
   drawWidget2DFunc(pwidget, scr_x, scr_y, scale_x, scale_y, theta_radians, rgba, t_frame);
+}
+
+//--------------------------------------------------------
+BEGIN_OVERLAY_LOOKUP(CanvasToScreenX_lookup, float*)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00220ae4)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x0022043c)
+END_OVERLAY_LOOKUP(CanvasToScreenX_lookup)
+
+float GetCanvasToScreenX(void)
+{
+  void* canvasToScreenXAddr = GetOverlayAddress((void**)&CanvasToScreenX_lookup);
+  if (!canvasToScreenXAddr) return 512; // default
+
+  return PEEK_F32(canvasToScreenXAddr);
+}
+
+//--------------------------------------------------------
+BEGIN_OVERLAY_LOOKUP(CanvasToScreenY_lookup, float*)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00220ae8)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x00220440)
+END_OVERLAY_LOOKUP(CanvasToScreenY_lookup)
+
+float GetCanvasToScreenY(void)
+{
+  void* canvasToScreenYAddr = GetOverlayAddress((void**)&CanvasToScreenY_lookup);
+  if (!canvasToScreenYAddr) return 416; // default
+
+  return PEEK_F32(canvasToScreenYAddr);
 }
