@@ -6,6 +6,9 @@
 #include "math3d.h"
 #include "overlay.h"
 
+#define CANVAS_TO_SCREEN_X      (*(float*)UNDERLAY_FIXED_CANVAS_TO_SCREEN_X)
+#define CANVAS_TO_SCREEN_Y      (*(float*)UNDERLAY_FIXED_CANVAS_TO_SCREEN_Y)
+
 //--------------------------------------------------------
 typedef void (*DrawQuad_f)(vec2f *vPoints, struct DrawParams *pParams);
 typedef void (*DrawWidget2DFlatPrim_f)(struct Widget2D* widget, u32 rgba, int prim_type);
