@@ -58,6 +58,20 @@ void DrawWidget2D(struct Widget2D *pwidget, int scr_x, int scr_y, float scale_x,
 }
 
 //--------------------------------------------------------
+BEGIN_OVERLAY_LOOKUP(VU1AddGsRegister_lookup, VU1AddGsRegister_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x004e7990)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x005e3768)
+END_OVERLAY_LOOKUP(VU1AddGsRegister_lookup)
+
+void VU1AddGsRegister(u32 reg, u64 rval)
+{
+  VU1AddGsRegister_f vu1AddGsRegisterFunc = (VU1AddGsRegister_f)GetOverlayAddress((void**)&VU1AddGsRegister_lookup);
+  if (!vu1AddGsRegisterFunc) return;
+
+  vu1AddGsRegisterFunc(reg, rval);
+}
+
+//--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(CanvasToScreenX_lookup, float*)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00220ae4)
   OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x0022043c)
