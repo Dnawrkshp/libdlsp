@@ -72,6 +72,20 @@ void VU1AddGsRegister(u32 reg, u64 rval)
 }
 
 //--------------------------------------------------------
+BEGIN_OVERLAY_LOOKUP(VU1SetScissor_lookup, VU1SetScissor_f)
+  OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x004e7a70)
+  OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x005e3848)
+END_OVERLAY_LOOKUP(VU1SetScissor_lookup)
+
+void VU1SetScissor(int left, int right, int top, int bottom)
+{
+  VU1SetScissor_f vu1SetScissorFunc = (VU1SetScissor_f)GetOverlayAddress((void**)&VU1SetScissor_lookup);
+  if (!vu1SetScissorFunc) return;
+
+  vu1SetScissorFunc(left, right, top, bottom);
+}
+
+//--------------------------------------------------------
 BEGIN_OVERLAY_LOOKUP(CanvasToScreenX_lookup, float*)
   OVERLAY_LOOKUP_ENTRY_NTSC(MAIN_MENU, 0x00220ae4)
   OVERLAY_LOOKUP_ENTRY_NTSC(CATACROM, 0x0022043c)
